@@ -1,10 +1,11 @@
 package com.bsfdv.transaction.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -25,10 +26,10 @@ public class Account {
     @Column
     private Long balance;
 
-    @OneToMany(mappedBy = "fromParty")
+    @OneToMany(mappedBy = "sender")
     private List<Transaction> outgoingTransactions;
 
-    @OneToMany(mappedBy = "toParty")
+    @OneToMany(mappedBy = "receiver")
     private List<Transaction> ingoingTransactions;
 
 }

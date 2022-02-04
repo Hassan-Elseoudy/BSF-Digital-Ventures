@@ -1,4 +1,4 @@
-package com.bsfdv.transaction.controller;
+package com.bsfdv.transaction.controller.dto;
 
 import com.bsfdv.transaction.model.Account;
 import jakarta.validation.constraints.NotBlank;

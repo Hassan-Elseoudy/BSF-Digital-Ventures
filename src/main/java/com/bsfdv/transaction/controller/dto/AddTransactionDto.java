@@ -1,17 +1,13 @@
-package com.bsfdv.transaction.controller;
+package com.bsfdv.transaction.controller.dto;
 
-import com.bsfdv.transaction.model.Account;
 import com.bsfdv.transaction.model.Transaction;
 import com.bsfdv.transaction.model.TransactionType;
 import com.bsfdv.transaction.util.ValueOfEnum;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Collections;
 
 @Data
 @AllArgsConstructor
