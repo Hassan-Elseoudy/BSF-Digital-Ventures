@@ -54,7 +54,7 @@ public class AccountController {
      * @param accountDto Account new details
      * @return The persisted account.
      */
-    @GetMapping(path = "/{id}")
+    @PutMapping(path = "/{id}")
     public ResponseEntity<AccountResponseDtoV1> updateOne(@Valid @RequestBody UpdateAccountDto accountDto, @PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(AccountResponseDtoV1.toDto(accountService.updateOne(accountDto, id)));
     }
@@ -65,7 +65,7 @@ public class AccountController {
      * @param id The id of the account
      * @return The persisted account.
      */
-    @GetMapping(path = "/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<AccountResponseDtoV1> deleteOne(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(AccountResponseDtoV1.toDto(accountService.deleteOne(id)));
     }

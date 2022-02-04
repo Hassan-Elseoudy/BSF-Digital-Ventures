@@ -1,20 +1,23 @@
 package com.bsfdv.transaction.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 public class Account {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -27,9 +30,23 @@ public class Account {
     private Long balance;
 
     @OneToMany(mappedBy = "sender")
+    @ToString.Exclude
     private List<Transaction> outgoingTransactions;
 
     @OneToMany(mappedBy = "receiver")
+    @ToString.Exclude
     private List<Transaction> ingoingTransactions;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Account account = (Account) o;
+        return id != null && Objects.equals(id, account.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

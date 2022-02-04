@@ -1,31 +1,48 @@
 package com.bsfdv.transaction.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 public class Transaction {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JoinColumn
-    @ManyToOne( fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Account sender;
 
     @JoinColumn
-    @ManyToOne( fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Account receiver;
 
     private Long amount;
 
     private TransactionType transactionType;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Transaction that = (Transaction) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
