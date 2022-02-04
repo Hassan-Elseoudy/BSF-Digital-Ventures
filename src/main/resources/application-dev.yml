@@ -1,7 +1,7 @@
-spring:
-  datasource:
-    password: password
-  
-  config:
-    activate:
-      on-profile: dev
+#spring:
+#  datasource:
+#    password: password
+#
+#  config:
+#    activate:
+#      on-profile: dev
