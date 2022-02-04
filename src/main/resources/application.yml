@@ -1,0 +1,27 @@
+spring:
+  application.name: bsfdv-app
+  
+  data:
+    rest:
+      max-page-size: 50
+  
+  datasource:
+    url: jdbc:mysql://localhost:3306/bsfdv
+    username: root
+    password:
+    initialization-mode: always
+    driverClassName: com.mysql.cj.jdbc.Driver
+    platform: mysql
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    generate-ddl: true
+    open-in-view: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+server:
+  servlet:
+    context-path: /api/bsfdv

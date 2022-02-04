@@ -1,0 +1,36 @@
+version: "3"
+services:
+  mysql-docker-container:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: bsfdv
+      MYSQL_ROOT_PASSWORD: bsfdv_password
+      MYSQL_USER: bsfdv_user
+      MYSQL_PASSWORD: bsfdv_password
+    volumes:
+      - /data/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - bsfdv-app-network
+    container_name: bsfdv-db
+  
+  bsfdv_app:
+    image: hassanelseoudy97/bsfdv_app_exercise:latest
+    depends_on:
+      - mysql-docker-container
+    ports:
+      - "8080:8080"
+    volumes:
+      - /data/spring-boot-app
+    networks:
+      - bsfdv-app-network
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://bsfdv-db:3306/bsfdv?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: bsfdv_user
+      SPRING_DATASOURCE_PASSWORD: bsfdv_password
+    container_name: bsfdv-app
+
+networks:
+  bsfdv-app-network:
