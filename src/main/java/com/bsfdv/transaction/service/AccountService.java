@@ -1,11 +1,8 @@
 package com.bsfdv.transaction.service;
 
-import com.bsfdv.transaction.controller.AddAccountDto;
-import com.bsfdv.transaction.controller.UpdateAccountDto;
+import com.bsfdv.transaction.controller.dto.AddAccountDto;
+import com.bsfdv.transaction.controller.dto.UpdateAccountDto;
 import com.bsfdv.transaction.model.Account;
-import com.bsfdv.transaction.model.Transaction;
-
-import java.util.List;
 
 public interface AccountService {
 

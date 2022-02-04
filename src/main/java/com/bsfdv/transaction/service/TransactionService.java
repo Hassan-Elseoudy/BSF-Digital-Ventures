@@ -1,11 +1,10 @@
 package com.bsfdv.transaction.service;
 
-import com.bsfdv.transaction.controller.AddAccountDto;
-import com.bsfdv.transaction.controller.AddTransactionDto;
-import com.bsfdv.transaction.controller.UpdateAccountDto;
-import com.bsfdv.transaction.model.Account;
+import com.bsfdv.transaction.controller.dto.AddTransactionDto;
 import com.bsfdv.transaction.model.Transaction;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface TransactionService {
 
     /**
