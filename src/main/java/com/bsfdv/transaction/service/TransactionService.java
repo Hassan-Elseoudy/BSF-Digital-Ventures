@@ -1,6 +1,6 @@
 package com.bsfdv.transaction.service;
 
-import com.bsfdv.transaction.controller.dto.AddTransactionDto;
+import com.bsfdv.transaction.controller.dto.CreateTransactionDto;
 import com.bsfdv.transaction.model.Transaction;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +26,6 @@ public interface TransactionService {
      * @param transactionDto create transaction dto
      * @return transaction
      */
-    Transaction createOne(AddTransactionDto transactionDto) throws Exception;
+    Transaction createOne(CreateTransactionDto transactionDto) throws Exception;
 
 }

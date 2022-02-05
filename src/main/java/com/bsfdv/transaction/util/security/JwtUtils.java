@@ -18,20 +18,16 @@ public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
     @Value("${bsfdv.app.jwtSecret}")
     private String jwtSecret;
-    
+
     @Value("${bsfdv.app.jwtExpirationMs}")
     private int jwtExpirationMs;
-    
+
     @Value("${bsfdv.app.jwtCookieName}")
     private String jwtCookie;
 
     public String getJwtFromCookies(HttpServletRequest request) {
         Cookie cookie = WebUtils.getCookie(request, jwtCookie);
-        if (cookie != null) {
-            return cookie.getValue();
-        } else {
-            return null;
-        }
+        return cookie != null ? cookie.getValue() : null;
     }
 
     public ResponseCookie generateJwtCookie(AccountDetailsImpl accountPrincipal) {
@@ -44,6 +40,10 @@ public class JwtUtils {
     }
 
     public String getUserNameFromJwtToken(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public String getIdFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 

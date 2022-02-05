@@ -56,7 +56,7 @@ public class AccountIntegrationTests extends TransactionApplicationTests {
 
     @Test
     public void createValidAccount() throws Exception {
-        SignupDto accountDto = new SignupDto("Hassan", "UK");
+        SignupDto accountDto = new SignupDto("Hassan", "UK", "rand234N76am", "hassan1@gmail.com", "password");
         // Act
         mockMvc.perform(MockMvcRequestBuilders.post("/accounts")
                         .content(this.mapper.writeValueAsString(accountDto))
@@ -71,7 +71,7 @@ public class AccountIntegrationTests extends TransactionApplicationTests {
 
     @Test
     public void createNotValidAccountMissingNameAndCountry() throws Exception {
-        SignupDto accountDto = new SignupDto("", "");
+        SignupDto accountDto = new SignupDto("", "", "rand234N76am", "hassan1@gmail.com", "password");
         // Act
         mockMvc.perform(MockMvcRequestBuilders.post("/accounts")
                         .content(this.mapper.writeValueAsString(accountDto))

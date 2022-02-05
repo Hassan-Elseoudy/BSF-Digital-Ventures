@@ -1,11 +1,13 @@
 package com.bsfdv.transaction.service;
 
-import com.bsfdv.transaction.controller.dto.AddTransactionDto;
+import com.bsfdv.transaction.controller.dto.CreateTransactionDto;
 import com.bsfdv.transaction.model.Account;
 import com.bsfdv.transaction.model.Transaction;
 import com.bsfdv.transaction.repository.TransactionRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -36,8 +38,10 @@ public class TransactionServiceDefaultImpl implements TransactionService {
 
     @Override
     @Transactional
-    public Transaction createOne(AddTransactionDto transactionDto) throws Exception {
-        Account sender = accountService.getOne(transactionDto.getSenderId());
+    public Transaction createOne(CreateTransactionDto transactionDto) throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        AccountDetailsImpl userDetails = (AccountDetailsImpl) authentication.getPrincipal();
+        Account sender = accountService.getOne(userDetails.getId());
         Account receiver = accountService.getOne(transactionDto.getReceiverId());
         switch (transactionDto.getTransactionType()) {
             case PAY -> {
@@ -57,7 +61,7 @@ public class TransactionServiceDefaultImpl implements TransactionService {
                     throw new Exception("You don't have enough balance.");
             }
         }
-        Transaction transaction = AddTransactionDto.toModel(transactionDto);
+        Transaction transaction = CreateTransactionDto.toModel(transactionDto);
         transaction.setSender(sender);
         transaction.setReceiver(receiver);
         return transactionRepository.save(transaction);

@@ -1,9 +1,8 @@
 package com.bsfdv.transaction;
 
 import com.bsfdv.transaction.repository.AccountRepository;
+import com.bsfdv.transaction.repository.RoleRepository;
 import com.bsfdv.transaction.repository.TransactionRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.bsfdv.transaction.data.MockData.accountsData;
+import static com.bsfdv.transaction.data.MockData.rolesData;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -27,14 +27,16 @@ class TransactionApplicationTests {
     @Autowired
     public AccountRepository accountRepository;
 
+    @Autowired
+    public RoleRepository roleRepository;
+
     protected void setUp() {
         accountRepository.saveAll(accountsData);
+        roleRepository.saveAll(rolesData);
 
     }
 
     protected void tearDown() {
-        transactionRepository.deleteAll();
-        accountRepository.deleteAll();
     }
 
 

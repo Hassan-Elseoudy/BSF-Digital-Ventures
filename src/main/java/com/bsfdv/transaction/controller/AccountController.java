@@ -1,12 +1,14 @@
 package com.bsfdv.transaction.controller;
 
-import com.bsfdv.transaction.controller.dto.SignupDto;
-import com.bsfdv.transaction.controller.dto.UpdateAccountDto;
+import com.bsfdv.transaction.controller.dto.*;
 import com.bsfdv.transaction.controller.response.AccountResponseDtoV1;
 import com.bsfdv.transaction.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -55,6 +57,7 @@ public class AccountController {
      * @return The persisted account.
      */
     @PutMapping(path = "/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<AccountResponseDtoV1> updateOne(@Valid @RequestBody UpdateAccountDto accountDto, @PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(AccountResponseDtoV1.toDto(accountService.updateOne(accountDto, id)));
     }
@@ -66,8 +69,25 @@ public class AccountController {
      * @return The persisted account.
      */
     @DeleteMapping(path = "/{id}")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<AccountResponseDtoV1> deleteOne(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(AccountResponseDtoV1.toDto(accountService.deleteOne(id)));
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserInfoResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        UserInfoResponse userInfoResponse = accountService.login(loginRequest);
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, userInfoResponse.getJwtcookie())
+                .body(userInfoResponse);
+    }
+
+    @PostMapping("/logout")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<MessageResponse> logoutUser() {
+        ResponseCookie responseCookie = accountService.logout();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .body(new MessageResponse("You've been signed out!"));
+    }
+
 
 }
