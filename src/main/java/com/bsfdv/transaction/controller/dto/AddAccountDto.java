@@ -13,7 +13,6 @@ import java.util.Collections;
 @NoArgsConstructor
 public class AddAccountDto {
 
-
     @NotBlank
     private String name;
 

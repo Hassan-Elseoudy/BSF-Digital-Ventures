@@ -4,6 +4,7 @@ import com.bsfdv.transaction.controller.dto.AddAccountDto;
 import com.bsfdv.transaction.controller.dto.UpdateAccountDto;
 import com.bsfdv.transaction.model.Account;
 import com.bsfdv.transaction.repository.AccountRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class AccountServiceDefaultImpl implements AccountService {
 
     @Override
     public Account getOne(Long id) {
-        return accountRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        return accountRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
