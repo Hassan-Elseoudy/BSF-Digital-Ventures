@@ -1,6 +1,6 @@
 package com.bsfdv.transaction.controller;
 
-import com.bsfdv.transaction.controller.dto.AddAccountDto;
+import com.bsfdv.transaction.controller.dto.SignupDto;
 import com.bsfdv.transaction.controller.dto.UpdateAccountDto;
 import com.bsfdv.transaction.controller.response.AccountResponseDtoV1;
 import com.bsfdv.transaction.service.AccountService;
@@ -29,7 +29,7 @@ public class AccountController {
      * @return The persisted account
      */
     @PostMapping
-    public ResponseEntity<AccountResponseDtoV1> createOne(@Valid @RequestBody AddAccountDto accountDto) {
+    public ResponseEntity<AccountResponseDtoV1> createOne(@Valid @RequestBody SignupDto accountDto) throws Exception {
         AccountResponseDtoV1 responseDtoV1 = AccountResponseDtoV1.toDto(accountService.createOne(accountDto));
         return ResponseEntity
                 .created(URI.create(responseDtoV1.getId().toString()))

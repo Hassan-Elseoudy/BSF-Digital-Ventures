@@ -1,8 +1,8 @@
 package com.bsfdv.transaction.service;
 
-import com.bsfdv.transaction.controller.dto.AddAccountDto;
-import com.bsfdv.transaction.controller.dto.UpdateAccountDto;
+import com.bsfdv.transaction.controller.dto.*;
 import com.bsfdv.transaction.model.Account;
+import org.springframework.http.ResponseCookie;
 
 public interface AccountService {
 
@@ -32,7 +32,7 @@ public interface AccountService {
      * @param accountDto create account dto
      * @return Account
      */
-    Account createOne(AddAccountDto accountDto);
+    Account createOne(SignupDto accountDto) throws Exception;
 
     /**
      * Set balance.
@@ -41,5 +41,11 @@ public interface AccountService {
      * @return Updated Account
      */
     Account setBalance(Long accountId, Long balance);
+
+    UserInfoResponse login(LoginRequest loginRequest);
+
+    ResponseCookie logout();
+
+
 
 }

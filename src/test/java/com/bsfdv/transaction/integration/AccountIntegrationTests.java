@@ -1,7 +1,7 @@
 package com.bsfdv.transaction.integration;
 
 import com.bsfdv.transaction.TransactionApplicationTests;
-import com.bsfdv.transaction.controller.dto.AddAccountDto;
+import com.bsfdv.transaction.controller.dto.SignupDto;
 import com.bsfdv.transaction.controller.dto.UpdateAccountDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,7 +56,7 @@ public class AccountIntegrationTests extends TransactionApplicationTests {
 
     @Test
     public void createValidAccount() throws Exception {
-        AddAccountDto accountDto = new AddAccountDto("Hassan", "UK");
+        SignupDto accountDto = new SignupDto("Hassan", "UK");
         // Act
         mockMvc.perform(MockMvcRequestBuilders.post("/accounts")
                         .content(this.mapper.writeValueAsString(accountDto))
@@ -71,7 +71,7 @@ public class AccountIntegrationTests extends TransactionApplicationTests {
 
     @Test
     public void createNotValidAccountMissingNameAndCountry() throws Exception {
-        AddAccountDto accountDto = new AddAccountDto("", "");
+        SignupDto accountDto = new SignupDto("", "");
         // Act
         mockMvc.perform(MockMvcRequestBuilders.post("/accounts")
                         .content(this.mapper.writeValueAsString(accountDto))
@@ -154,87 +154,6 @@ public class AccountIntegrationTests extends TransactionApplicationTests {
                 .andExpect(jsonPath("$.status", is("NOT_FOUND")))
                 .andExpect(status().isNotFound());
     }
-
-
-
-//    @Test
-//    public void getAllaccountss() throws Exception {
-//        // Act
-//        mockMvc.perform(MockMvcRequestBuilders.
-//                        get("/accounts")
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                // Assert
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(8)));
-//    }
-//
-//    @Test
-//    public void getAllaccountssTrueState() throws Exception {
-//        // Act
-//        mockMvc.perform(MockMvcRequestBuilders.
-//                        get("/accounts")
-//                        .param("state", String.valueOf(true))
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                // Assert
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(4)));
-//    }
-//
-//    @Test
-//    public void getAllaccountssFalseState() throws Exception {
-//        // Act
-//        mockMvc.perform(MockMvcRequestBuilders.
-//                        get("/accounts")
-//                        .param("state", String.valueOf(false))
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                // Assert
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(4)));
-//    }
-//
-//    @Test
-//    public void getAllaccountssCameroon() throws Exception {
-//        // Act
-//        mockMvc.perform(MockMvcRequestBuilders.
-//                        get("/accounts")
-//                        .param("countryId", "0")
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                // Assert
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(4)));
-//    }
-//
-//    @Test
-//    public void getAllaccountssInCameroonTrueState() throws Exception {
-//        // Act
-//        mockMvc.perform(MockMvcRequestBuilders.
-//                        get("/accounts")
-//                        .param("state", String.valueOf(true))
-//                        .param("countryId", "0")
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                // Assert
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(2)));
-//    }
-//
-//    @Test
-//    public void getAllaccountssInCameroonFalseState() throws Exception {
-//        // Act
-//        mockMvc.perform(MockMvcRequestBuilders.
-//                        get("/accounts")
-//                        .param("state", String.valueOf(false))
-//                        .param("countryId", "0")
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                // Assert
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(2)));
-//    }
 
 
 }
