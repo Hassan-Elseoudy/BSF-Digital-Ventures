@@ -1,4 +1,4 @@
-package com.bsfdv.transaction.util;
+package com.bsfdv.transaction.util.error;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +21,8 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
+
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 @Slf4j
@@ -114,6 +114,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
         ApiError apiError = new ApiError(NOT_FOUND);
         apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    /**
+     * Handles EntityNotFoundException. Created to encapsulate errors with more detail than javax.persistence.EntityNotFoundException.
+     *
+     * @param ex the EntityNotFoundException
+     * @return the ApiError object
+     */
+    @ExceptionHandler(NotEnoughBalanceException.class)
+    protected ResponseEntity<Object> handleEntityNotFound(NotEnoughBalanceException ex) {
+        ApiError apiError = new ApiError(CONFLICT);
+        apiError.setMessage("You don't have enough balance.");
         return buildResponseEntity(apiError);
     }
 

@@ -4,13 +4,13 @@ import com.bsfdv.transaction.controller.dto.CreateTransactionDto;
 import com.bsfdv.transaction.model.Account;
 import com.bsfdv.transaction.model.Transaction;
 import com.bsfdv.transaction.repository.TransactionRepository;
+import com.bsfdv.transaction.util.error.NotEnoughBalanceException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.NoSuchElementException;
 
 @Service
 public class TransactionServiceDefaultImpl implements TransactionService {
@@ -26,7 +26,7 @@ public class TransactionServiceDefaultImpl implements TransactionService {
 
     @Override
     public Transaction getOne(Long id) {
-        return transactionRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        return transactionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class TransactionServiceDefaultImpl implements TransactionService {
                     accountService.setBalance(sender.getId(), sender.getBalance() - transactionDto.getAmount());
                     accountService.setBalance(receiver.getId(), receiver.getBalance() + transactionDto.getAmount());
                 } else
-                    throw new Exception("You don't have enough balance.");
+                    throw new NotEnoughBalanceException(); //NotEnoughBalanceException
             }
             case DEPOSIT -> {
                 accountService.setBalance(receiver.getId(), receiver.getBalance() + transactionDto.getAmount());
@@ -58,7 +58,7 @@ public class TransactionServiceDefaultImpl implements TransactionService {
                 if (sender.getBalance() >= transactionDto.getAmount()) {
                     accountService.setBalance(sender.getId(), sender.getBalance() - transactionDto.getAmount());
                 } else
-                    throw new Exception("You don't have enough balance.");
+                    throw new NotEnoughBalanceException();
             }
         }
         Transaction transaction = CreateTransactionDto.toModel(transactionDto);

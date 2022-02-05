@@ -1,4 +1,4 @@
-package com.bsfdv.transaction.util;
+package com.bsfdv.transaction.util.error;
 
 
 import lombok.AllArgsConstructor;

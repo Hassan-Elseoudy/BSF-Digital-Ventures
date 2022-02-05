@@ -45,6 +45,7 @@ public class AccountController {
      * @return The persisted account.
      */
     @GetMapping(path = "/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<AccountResponseDtoV1> getOne(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(AccountResponseDtoV1.toDto(accountService.getOne(id)));
     }
