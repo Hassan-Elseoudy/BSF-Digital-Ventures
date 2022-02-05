@@ -42,4 +42,11 @@ public class AccountServiceDefaultImpl implements AccountService {
         Account account = AddAccountDto.toModel(accountDto);
         return accountRepository.save(account);
     }
+
+    @Override
+    public Account setBalance(Long accountId, Long balance) {
+        Account account = getOne(accountId);
+        account.setBalance(balance);
+        return accountRepository.save(account);
+    }
 }

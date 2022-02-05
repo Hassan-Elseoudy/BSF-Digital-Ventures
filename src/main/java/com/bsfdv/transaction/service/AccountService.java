@@ -34,4 +34,12 @@ public interface AccountService {
      */
     Account createOne(AddAccountDto accountDto);
 
+    /**
+     * Set balance.
+     * @param accountId Account
+     * @param balance balance.
+     * @return Updated Account
+     */
+    Account setBalance(Long accountId, Long balance);
+
 }
