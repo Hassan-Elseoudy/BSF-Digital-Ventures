@@ -28,7 +28,7 @@ public class TransactionController {
      * @return The persisted transaction
      */
     @PostMapping
-    public ResponseEntity<TransactionResponseDtoV1> createOne(@Valid @RequestBody AddTransactionDto addTransactionDto) {
+    public ResponseEntity<TransactionResponseDtoV1> createOne(@Valid @RequestBody AddTransactionDto addTransactionDto) throws Exception {
         TransactionResponseDtoV1 responseDtoV1 = TransactionResponseDtoV1.toDto(transactionService.createOne(addTransactionDto));
         return ResponseEntity
                 .created(URI.create(responseDtoV1.getId().toString()))

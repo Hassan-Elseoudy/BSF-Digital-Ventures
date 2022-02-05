@@ -14,17 +14,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddTransactionDto {
 
-    @ValueOfEnum(enumClass = TransactionType.class)
+    @ValueOfEnum(regexp = "WITHDRAW|DEPOSIT|PAY")
     private TransactionType transactionType;
 
     @Positive
     private Long amount;
 
     @NotNull
-    private Long fromPartyId;
+    private Long senderId;
 
     @NotNull
-    private Long toPartyId;
+    private Long receiverId;
 
     public static Transaction toModel(AddTransactionDto transactionDto) {
         Transaction transaction = new Transaction();
