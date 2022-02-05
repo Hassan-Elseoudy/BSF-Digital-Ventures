@@ -3,26 +3,29 @@ package com.bsfdv.transaction.util;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
-public class  ValueOfEnumValidator implements ConstraintValidator<ValueOfEnum, CharSequence> {
-    private List<String> acceptedValues;
+public class ValueOfEnumValidator implements ConstraintValidator<ValueOfEnum, Enum<?>> {
+    private Pattern pattern;
 
     @Override
     public void initialize(ValueOfEnum annotation) {
-        acceptedValues = Stream.of(annotation.enumClass().getEnumConstants())
-                .map(Enum::name)
-                .collect(Collectors.toList());
+        try {
+            pattern = Pattern.compile(annotation.regexp());
+        } catch (PatternSyntaxException e) {
+            throw new IllegalArgumentException("Given regex is invalid", e);
+        }
     }
 
     @Override
-    public boolean isValid(CharSequence value, ConstraintValidatorContext context) {
+    public boolean isValid(Enum<?> value, ConstraintValidatorContext context) {
         if (value == null) {
             return true;
         }
 
-        return acceptedValues.contains(value.toString());
+        Matcher m = pattern.matcher(value.name());
+        return m.matches();
     }
 }
