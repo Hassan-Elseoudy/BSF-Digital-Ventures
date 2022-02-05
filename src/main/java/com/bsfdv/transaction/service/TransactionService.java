@@ -26,6 +26,6 @@ public interface TransactionService {
      * @param transactionDto create transaction dto
      * @return transaction
      */
-    Transaction createOne(AddTransactionDto transactionDto);
+    Transaction createOne(AddTransactionDto transactionDto) throws Exception;
 
 }
