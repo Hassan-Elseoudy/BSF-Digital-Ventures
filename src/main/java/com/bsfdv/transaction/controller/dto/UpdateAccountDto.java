@@ -1,7 +1,7 @@
 package com.bsfdv.transaction.controller.dto;
 
 import com.bsfdv.transaction.model.Account;
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

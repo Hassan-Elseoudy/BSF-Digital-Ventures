@@ -2,8 +2,8 @@ package com.bsfdv.transaction.util;
 
 import com.bsfdv.transaction.controller.dto.CreateTransactionDto;
 import com.bsfdv.transaction.model.TransactionType;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
 public class TransactionTypeValidator implements ConstraintValidator<TransactionValid, CreateTransactionDto> {
 
