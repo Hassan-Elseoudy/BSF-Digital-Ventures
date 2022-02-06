@@ -6,6 +6,7 @@ import com.bsfdv.transaction.controller.dto.UpdateAccountDto;
 import com.bsfdv.transaction.controller.dto.UserInfoResponse;
 import com.bsfdv.transaction.model.Account;
 import com.bsfdv.transaction.model.ERole;
+import com.bsfdv.transaction.model.Role;
 import com.bsfdv.transaction.repository.AccountRepository;
 import com.bsfdv.transaction.repository.RoleRepository;
 import com.bsfdv.transaction.util.security.JwtUtils;
@@ -22,8 +23,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.bsfdv.transaction.model.ERole.*;
 
 @Service
 public class AccountServiceDefaultImpl implements AccountService {
@@ -69,7 +73,12 @@ public class AccountServiceDefaultImpl implements AccountService {
 
         Account account = SignupDto.toModel(signupDto);
         account.setPassword(encoder.encode(signupDto.getPassword()));
-        account.setRoles(Set.of(roleRepository.findByName(ERole.ROLE_USER).orElseThrow(() -> new RuntimeException("Error: Role is not found."))));
+        account.setRoles(Set.of(roleRepository.findByName(ERole.ROLE_USER).orElseGet(
+                () -> {
+                    roleRepository.save(new Role(ROLE_USER));
+                    roleRepository.save(new Role(ROLE_MODERATOR));
+                    return roleRepository.save(new Role(ROLE_ADMIN));
+                })));
 
         return accountRepository.save(account);
     }
