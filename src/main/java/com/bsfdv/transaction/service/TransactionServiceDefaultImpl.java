@@ -42,28 +42,34 @@ public class TransactionServiceDefaultImpl implements TransactionService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         AccountDetailsImpl userDetails = (AccountDetailsImpl) authentication.getPrincipal();
         Account sender = accountService.getOne(userDetails.getId());
-        Account receiver = accountService.getOne(transactionDto.getReceiverId());
+        Transaction transaction = CreateTransactionDto.toModel(transactionDto);
         switch (transactionDto.getTransactionType()) {
             case PAY -> {
                 if (sender.getBalance() >= transactionDto.getAmount()) {
+                    Account receiver = accountService.getOne(transactionDto.getReceiverId());
                     accountService.setBalance(sender.getId(), sender.getBalance() - transactionDto.getAmount());
                     accountService.setBalance(receiver.getId(), receiver.getBalance() + transactionDto.getAmount());
+                    transaction.setSender(sender);
+                    transaction.setReceiver(receiver);
                 } else
-                    throw new NotEnoughBalanceException(); //NotEnoughBalanceException
+                    throw new NotEnoughBalanceException();
             }
             case DEPOSIT -> {
-                accountService.setBalance(receiver.getId(), receiver.getBalance() + transactionDto.getAmount());
+                accountService.setBalance(sender.getId(), sender.getBalance() + transactionDto.getAmount());
+                transaction.setSender(sender);
+                transaction.setReceiver(sender);
             }
             case WITHDRAW -> {
                 if (sender.getBalance() >= transactionDto.getAmount()) {
                     accountService.setBalance(sender.getId(), sender.getBalance() - transactionDto.getAmount());
+                    transaction.setSender(sender);
+                    transaction.setReceiver(sender);
                 } else
                     throw new NotEnoughBalanceException();
             }
         }
-        Transaction transaction = CreateTransactionDto.toModel(transactionDto);
-        transaction.setSender(sender);
-        transaction.setReceiver(receiver);
+
+
         return transactionRepository.save(transaction);
     }
 

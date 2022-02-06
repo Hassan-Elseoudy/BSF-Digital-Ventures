@@ -36,6 +36,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(accountDetailsService).passwordEncoder(passwordEncoder());
+        authenticationManagerBuilder.inMemoryAuthentication().passwordEncoder(passwordEncoder()).withUser("normalUser").password(passwordEncoder().encode("secret")).roles("USER");
+        authenticationManagerBuilder.inMemoryAuthentication().passwordEncoder(passwordEncoder()).withUser("modUser").password(passwordEncoder().encode("secret")).roles("MODERATOR");
+        authenticationManagerBuilder.inMemoryAuthentication().passwordEncoder(passwordEncoder()).withUser("adminUser").password(passwordEncoder().encode("secret")).roles("ADMIN");
+
     }
     @Bean
     @Override

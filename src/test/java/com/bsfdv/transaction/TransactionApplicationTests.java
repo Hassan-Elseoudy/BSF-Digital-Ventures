@@ -10,7 +10,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.bsfdv.transaction.data.MockData.accountsData;
-import static com.bsfdv.transaction.data.MockData.rolesData;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -32,7 +31,6 @@ class TransactionApplicationTests {
 
     protected void setUp() {
         accountRepository.saveAll(accountsData);
-        roleRepository.saveAll(rolesData);
 
     }
 

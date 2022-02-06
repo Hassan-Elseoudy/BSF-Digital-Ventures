@@ -15,10 +15,4 @@ public class MockData {
     public static Account tenThousandsBalanceAccount = new Account(3L, "Hassan", "Egypt", 10000L, "aygfhdfyuwegfb", "aslkjnakjfbnasjkf@email.com", "asujfnaikfhtqwuiq", Collections.emptySet(),Collections.emptyList(), Collections.emptyList());
     public static List<Account> accountsData = List.of(zeroBalanceAccount, oneThousandBalanceAccount, tenThousandsBalanceAccount);
 
-    public static Role userRole = new Role(ROLE_USER);
-    public static Role modRole = new Role(ROLE_MODERATOR);
-    public static Role adminRole = new Role(ROLE_ADMIN);
-    public static List<Role> rolesData = List.of(userRole, modRole, adminRole);
-
-
 }

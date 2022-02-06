@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.bsfdv.transaction.data.MockData.accountsData;
@@ -18,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class AccountIntegrationTests extends TransactionApplicationTests {
+class AccountIntegrationTests extends TransactionApplicationTests {
 
     @Autowired
     public ObjectMapper mapper;
@@ -29,7 +30,8 @@ public class AccountIntegrationTests extends TransactionApplicationTests {
     }
 
     @Test
-    public void getOneValidAccount() throws Exception {
+    @WithMockUser(value = "normalUser")
+    void getOneValidAccount() throws Exception {
         // Act
         mockMvc.perform(MockMvcRequestBuilders.get("/accounts/1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -43,7 +45,8 @@ public class AccountIntegrationTests extends TransactionApplicationTests {
     }
 
     @Test
-    public void getNonValidAccount() throws Exception {
+    @WithMockUser(value = "normalUser")
+    void getNonValidAccount() throws Exception {
         // Act
         mockMvc.perform(MockMvcRequestBuilders.get("/accounts/-1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -55,8 +58,8 @@ public class AccountIntegrationTests extends TransactionApplicationTests {
     }
 
     @Test
-    public void createValidAccount() throws Exception {
-        SignupDto accountDto = new SignupDto("Hassan", "UK", "rand234N76am", "hassan1@gmail.com", "password");
+    void createValidAccount() throws Exception {
+        SignupDto accountDto = new SignupDto("Hassan", "UK", "rand2t34N76am", "hassan1@gmail.com", "password");
         // Act
         mockMvc.perform(MockMvcRequestBuilders.post("/accounts")
                         .content(this.mapper.writeValueAsString(accountDto))
@@ -70,7 +73,7 @@ public class AccountIntegrationTests extends TransactionApplicationTests {
     }
 
     @Test
-    public void createNotValidAccountMissingNameAndCountry() throws Exception {
+    void createNotValidAccountMissingNameAndCountry() throws Exception {
         SignupDto accountDto = new SignupDto("", "", "rand234N76am", "hassan1@gmail.com", "password");
         // Act
         mockMvc.perform(MockMvcRequestBuilders.post("/accounts")
@@ -86,7 +89,8 @@ public class AccountIntegrationTests extends TransactionApplicationTests {
     }
 
     @Test
-    public void updateValidAccountWithValidParameters() throws Exception {
+    @WithMockUser(value = "normalUser")
+    void updateValidAccountWithValidParameters() throws Exception {
         UpdateAccountDto accountDto = new UpdateAccountDto("Semsem", "UK");
         // Act
         mockMvc.perform(MockMvcRequestBuilders.put("/accounts/1")
@@ -102,7 +106,8 @@ public class AccountIntegrationTests extends TransactionApplicationTests {
     }
 
     @Test
-    public void updateNotFoundAccountWithValidParameters() throws Exception {
+    @WithMockUser(value = "normalUser")
+    void updateNotFoundAccountWithValidParameters() throws Exception {
         UpdateAccountDto accountDto = new UpdateAccountDto("Semsem", "UK");
         // Act
         mockMvc.perform(MockMvcRequestBuilders.put("/accounts/-1")
@@ -115,7 +120,8 @@ public class AccountIntegrationTests extends TransactionApplicationTests {
     }
 
     @Test
-    public void updateValidAccountWithInvalidParameters() throws Exception {
+    @WithMockUser(value = "normalUser")
+    void updateValidAccountWithInvalidParameters() throws Exception {
         UpdateAccountDto accountDto = new UpdateAccountDto("", "");
         // Act
         mockMvc.perform(MockMvcRequestBuilders.put("/accounts/1")
@@ -131,7 +137,8 @@ public class AccountIntegrationTests extends TransactionApplicationTests {
     }
 
     @Test
-    public void deleteValidAccount() throws Exception {
+    @WithMockUser(value = "normalUser")
+    void deleteValidAccount() throws Exception {
         // Act
         mockMvc.perform(MockMvcRequestBuilders.delete("/accounts/1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -145,7 +152,8 @@ public class AccountIntegrationTests extends TransactionApplicationTests {
     }
 
     @Test
-    public void deleteNotFoundAccount() throws Exception {
+    @WithMockUser(value = "normalUser")
+    void deleteNotFoundAccount() throws Exception {
         // Act
         mockMvc.perform(MockMvcRequestBuilders.delete("/accounts/-1")
                         .contentType(MediaType.APPLICATION_JSON))

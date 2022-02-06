@@ -2,6 +2,7 @@ package com.bsfdv.transaction.controller.dto;
 
 import com.bsfdv.transaction.model.Transaction;
 import com.bsfdv.transaction.model.TransactionType;
+import com.bsfdv.transaction.util.TransactionValid;
 import com.bsfdv.transaction.util.ValueOfEnum;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TransactionValid
 public class CreateTransactionDto {
 
     @ValueOfEnum(regexp = "WITHDRAW|DEPOSIT|PAY")
@@ -20,7 +22,6 @@ public class CreateTransactionDto {
     @Positive
     private Long amount;
 
-    @NotNull
     private Long receiverId;
 
     public static Transaction toModel(CreateTransactionDto transactionDto) {

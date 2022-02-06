@@ -70,7 +70,7 @@ public class AccountController {
      * @return The persisted account.
      */
     @DeleteMapping(path = "/{id}")
-    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<AccountResponseDtoV1> deleteOne(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(AccountResponseDtoV1.toDto(accountService.deleteOne(id)));
     }
