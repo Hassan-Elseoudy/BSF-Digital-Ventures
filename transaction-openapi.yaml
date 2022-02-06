@@ -1,0 +1,90 @@
+openapi: "3.0.3"
+info:
+  title: "transaction API"
+  description: "transaction API"
+  version: "1.0.0"
+servers:
+  - url: "https://transaction"
+paths:
+  /accounts:
+    post:
+      summary: "POST accounts"
+      operationId: "createOne"
+      responses:
+        "200":
+          description: "OK"
+  /accounts/login:
+    post:
+      summary: "POST accounts/login"
+      operationId: "authenticateUser"
+      responses:
+        "200":
+          description: "OK"
+  /accounts/logout:
+    post:
+      summary: "POST accounts/logout"
+      operationId: "logoutUser"
+      responses:
+        "200":
+          description: "OK"
+  /accounts/{id}:
+    get:
+      summary: "GET accounts/{id}"
+      operationId: "getOne"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "number"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+    put:
+      summary: "PUT accounts/{id}"
+      operationId: "updateOne"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "number"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+    delete:
+      summary: "DELETE accounts/{id}"
+      operationId: "deleteOne"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "number"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+  /transactions:
+    post:
+      summary: "POST transactions"
+      operationId: "createOne"
+      responses:
+        "200":
+          description: "OK"
+  /transactions/{id}:
+    get:
+      summary: "GET transactions/{id}"
+      operationId: "getOne"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "number"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
