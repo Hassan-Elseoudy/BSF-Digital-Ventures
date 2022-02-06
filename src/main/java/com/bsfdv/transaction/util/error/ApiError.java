@@ -1,7 +1,7 @@
 package com.bsfdv.transaction.util.error;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.ConstraintViolation;
+import javax.validation.ConstraintViolation;
 import lombok.Data;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;

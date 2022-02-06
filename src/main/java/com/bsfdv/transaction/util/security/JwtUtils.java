@@ -1,8 +1,8 @@
 package com.bsfdv.transaction.util.security;
 
 import com.bsfdv.transaction.service.AccountDetailsImpl;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

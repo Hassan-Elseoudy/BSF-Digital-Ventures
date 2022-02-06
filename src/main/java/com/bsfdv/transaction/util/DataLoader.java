@@ -7,8 +7,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 import static com.bsfdv.transaction.model.ERole.*;
 
 @Component
@@ -22,10 +20,8 @@ public class DataLoader implements ApplicationRunner {
     }
 
     public void run(ApplicationArguments args) {
-        Role userRole = new Role(ROLE_USER);
-        Role modRole = new Role(ROLE_MODERATOR);
-        Role adminRole = new Role(ROLE_ADMIN);
-        List<Role> rolesData = List.of(userRole, modRole, adminRole);
-        roleRepository.saveAll(rolesData);
+        roleRepository.save(new Role(ROLE_USER));
+        roleRepository.save(new Role(ROLE_MODERATOR));
+        roleRepository.save(new Role(ROLE_ADMIN));
     }
 }

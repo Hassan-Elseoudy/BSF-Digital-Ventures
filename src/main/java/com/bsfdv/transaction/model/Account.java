@@ -1,9 +1,9 @@
 package com.bsfdv.transaction.model;
 
-import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +18,7 @@ import java.util.Set;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column

@@ -1,6 +1,7 @@
 package com.bsfdv.transaction.util.error;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.ConstraintViolationException;
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
+import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -118,15 +119,28 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Handles EntityNotFoundException. Created to encapsulate errors with more detail than javax.persistence.EntityNotFoundException.
+     * Handles NotEnoughBalanceException. Created to encapsulate errors with more detail than NotEnoughBalanceException.
      *
-     * @param ex the EntityNotFoundException
+     * @param ex the NotEnoughBalanceException
      * @return the ApiError object
      */
     @ExceptionHandler(NotEnoughBalanceException.class)
     protected ResponseEntity<Object> handleEntityNotFound(NotEnoughBalanceException ex) {
         ApiError apiError = new ApiError(CONFLICT);
         apiError.setMessage("You don't have enough balance.");
+        return buildResponseEntity(apiError);
+    }
+
+    /**
+     * Handles EntityExistsException. Created to encapsulate errors with more detail than javax.persistence.EntityExistsException.
+     *
+     * @param ex the EntityExistsException
+     * @return the ApiError object
+     */
+    @ExceptionHandler(EntityExistsException.class)
+    protected ResponseEntity<Object> handleEntityNotFound(EntityExistsException ex) {
+        ApiError apiError = new ApiError(CONFLICT);
+        apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
 
